@@ -9,7 +9,6 @@ h1 {
 #container {
   width: 600px;
   height: 600px;
-  background-color: #eeeeee;
   margin: 60px auto;
 }
 .grid {
@@ -18,4 +17,17 @@ h1 {
 }
 .gridBlack {
   background-color: black;
+}
+ul {
+  padding: 0;
+  text-align: center;
+}
+li {
+  display: inline;
+}
+
+button{
+  background-color: #eeeeee;
+  border: 0;
+  padding: 1em;
 }

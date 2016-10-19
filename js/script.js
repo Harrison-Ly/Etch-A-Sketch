@@ -1,11 +1,13 @@
 $(document).ready(function() {
   createGrid();
+  buttons();
   draw();
 })
+
+var containerGrid = $('#container');
 function createGrid(resolution) {
-  var containerGrid = $('#container');
   if(resolution == null) {
-    resolution = 64;
+    resolution = 16;
   }
   var pixelSize = 600 / resolution;
   for (var c = 0; c < resolution; c++) {
@@ -18,4 +20,23 @@ function draw() {
   $('.grid').on('mouseenter', function(){
     $(this).addClass('gridBlack');
   });
+}
+function buttons() {
+  var button_click = $('.buttons');
+  var grid = $('.grid');
+  $('button[name="clear"]').on('click', function() {
+    if (grid.hasClass('gridBlack')) {
+      grid.removeClass('gridBlack');
+    }
+  });
+  $('button[name="grid_resolution"]').on('click', function() {
+    var userGrid = prompt('Enter your grid resolution');
+    containerGrid.empty();
+    createGrid(userGrid);
+    draw();
+  });
+}
+
+function alerttest() {
+  alert("testing");
 }
