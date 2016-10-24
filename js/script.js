@@ -1,10 +1,10 @@
 $(document).ready(function() {
   createGrid();
-  buttons();
-  draw();
-})
+});
 
 var containerGrid = $('#container');
+var colourMode = 'gridBlack';
+
 function createGrid(resolution) {
   if(resolution == null) {
     resolution = 16;
@@ -15,28 +15,54 @@ function createGrid(resolution) {
       containerGrid.append('<div class="grid" style="width: ' + pixelSize + 'px; height: ' + pixelSize + 'px;"></div>');
     }
   }
+  draw(colourMode);
 }
-function draw() {
+
+function draw(colourMode) {
   $('.grid').on('mouseenter', function(){
-    $(this).addClass('gridBlack');
-  });
-}
-function buttons() {
-  var button_click = $('.buttons');
-  var grid = $('.grid');
-  $('button[name="clear"]').on('click', function() {
-    if (grid.hasClass('gridBlack')) {
-      grid.removeClass('gridBlack');
+    if (colourMode == 'gridBlack') {
+      $(this).removeClass('gridRandom');
+      $(this).css('background-color', '');
+      $(this).addClass('gridBlack');
     }
-  });
-  $('button[name="grid_resolution"]').on('click', function() {
-    var userGrid = prompt('Enter your grid resolution');
-    containerGrid.empty();
-    createGrid(userGrid);
-    draw();
+    else if (colourMode == 'gridRandom') {
+      $(this).removeClass('gridBlack');
+      $(this).addClass('gridRandom');
+      $(this).css('background-color', getRandomColour());
+    }
   });
 }
 
-function alerttest() {
-  alert("testing");
+function getRandomColour() {
+  var hexValues = '0123456789ABCDEF';
+  var hexColour = '#';
+  for (i = 0; i < 6; i++) {
+    hexColour += hexValues[Math.floor((Math.random() * 15) + 1)];
+  }
+  return hexColour;
 }
+
+function clearGrid() {
+    $('.grid').removeClass('gridBlack gridRandom');
+    $('.grid').css('background-color', '');
+}
+
+$('button[name="clear"]').on('click', function() {
+  clearGrid();
+});
+
+$('button[name="grid_resolution"]').on('click', function() {
+  var userGrid = prompt('Enter your grid resolution');
+  containerGrid.empty();
+  createGrid(userGrid);
+});
+
+$('button[name="black"]').on('click', function() {
+  colourMode = 'gridBlack';
+  draw(colourMode);
+})
+
+$('button[name="randoms"]').on('click', function() {
+  colourMode = 'gridRandom';
+  draw(colourMode);
+});
