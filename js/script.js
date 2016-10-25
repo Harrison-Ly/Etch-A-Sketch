@@ -21,14 +21,24 @@ function createGrid(resolution) {
 function draw(colourMode) {
   $('.grid').on('mouseenter', function(){
     if (colourMode == 'gridBlack') {
-      $(this).removeClass('gridRandom');
+      $(this).removeClass('gridRandom gridOpacity');
       $(this).css('background-color', '');
       $(this).addClass('gridBlack');
+      $(this).css('opacity', '1');
     }
     else if (colourMode == 'gridRandom') {
-      $(this).removeClass('gridBlack');
+      $(this).removeClass('gridBlack gridOpacity');
       $(this).addClass('gridRandom');
       $(this).css('background-color', getRandomColour());
+      $(this).css('opacity', '1');
+    }
+    else if (colourMode == 'gridOpacity') {
+      $(this).removeClass('gridBlack gridRandom');
+      $(this).addClass('gridOpacity');
+      $(this).css({'opacity': '0.1', 'background-color': '#000000'});
+
+      $(this).css('opacity', getGridOpacity($(this)));
+
     }
   });
 }
@@ -42,8 +52,15 @@ function getRandomColour() {
   return hexColour;
 }
 
+function getGridOpacity(a) {
+  var newOpacity = parseFloat($(a).css('opacity'));
+  newOpacity += 0.1;
+  console.log(newOpacity);
+  return newOpacity;
+}
+
 function clearGrid() {
-    $('.grid').removeClass('gridBlack gridRandom');
+    $('.grid').removeClass('gridBlack gridRandom gridOpacity');
     $('.grid').css('background-color', '');
 }
 
@@ -59,6 +76,13 @@ $('button[name="grid_resolution"]').on('click', function() {
 
 $('button[name="black"]').on('click', function() {
   colourMode = 'gridBlack';
+  draw(colourMode);
+})
+
+$('button[name="opacity"]').on('click', function() {
+  clearGrid();
+  $('.grid').css('background-color', '#eeeeee');
+  colourMode = 'gridOpacity';
   draw(colourMode);
 })
 
