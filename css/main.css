@@ -1,15 +1,18 @@
 body {
-  font-family:sans-serif;
+  font-family: 'Arial', 'Helvetica', 'sans-serif';
   padding: 0;
-  margin: 0;
 }
 h1 {
   text-align: center;
+  font-family: 'Homemade Apple', 'Helvetica', 'sans-serif';
+  font-size: 3em;
+  text-shadow: 4px 4px 7px #aaa;
+  margin: auto;
 }
 #container {
   width: 600px;
   height: 600px;
-  margin: 60px auto;
+  margin: 20px auto;
 }
 .grid {
   background-color: #eeeeee;
@@ -27,7 +30,14 @@ li {
 }
 
 button{
+  font-weight: bold;
   background-color: #eeeeee;
-  border: 0;
+  border: 1px solid white;
   padding: 1em;
+  margin: 0.25em;
+  outline: 0;
+}
+.buttonHighlight {
+  background-color: #ffffff;
+  border: 1px solid black;
 }
