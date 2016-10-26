@@ -1,10 +1,23 @@
 $(document).ready(function() {
   createGrid();
-  gridBlack();
+  drawMode();
 });
 
 var containerGrid = $('#container');
 var resolution = 16;
+var mode = '';
+
+function drawMode(mode) {
+  if (mode == 'gridRandom') {
+    gridRandom();
+  }
+  else if (mode == 'gridOpacity') {
+    gridOpacity();
+  }
+  else {
+    gridBlack();
+  }
+}
 
 function createGrid(resolution) {
   if(resolution == null) {
@@ -26,6 +39,7 @@ function gridBlack() {
     $(this).css('opacity', '1.0');
   });
 }
+
 function gridRandom() {
   $('.grid').on('mouseenter', function () {
     $(this).removeClass('gridBlack gridOpacity');
@@ -34,12 +48,11 @@ function gridRandom() {
     $(this).css('opacity', '1.0');
   });
 }
+
 function gridOpacity() {
   $('.grid').on('mouseenter', function() {
-    //$(this).removeClass('gridBlack gridRandom');
     if ($(this).hasClass('gridOpacity')) {
       $(this).css('opacity', getGridOpacity($(this)))
-      console.log(getGridOpacity($(this)));
     }
     else {
       $(this).addClass('gridOpacity');
@@ -64,7 +77,6 @@ function getGridOpacity(oldOpacity) {
   if (newOpacity > 1) {
     newOpacity = 1;
   }
-    console.log(newOpacity);
   return newOpacity;
 }
 
@@ -75,35 +87,37 @@ function clearGrid() {
 
 $('button[name="clear"]').on('click', function() {
   clearGrid();
-  gridBlack();
+  drawMode(mode);
 });
 
 $('button[name="gridResolution"]').on('click', function() {
-
   resolution = prompt('Enter your grid resolution');
   containerGrid.empty();
   createGrid(resolution);
-  gridBlack();
+  drawMode(mode);
 });
 
 $('button[name="black"]').on('click', function() {
+  mode = 'gridBlack';
   $(this).closest('ul').find('button').removeClass('buttonHighlight');
   $(this).addClass('buttonHighlight');
   clearGrid();
-  gridBlack();
+  drawMode(mode);
 })
 
 $('button[name="opacity"]').on('click', function() {
+  mode = 'gridOpacity';
   $(this).closest('ul').find('button').removeClass('buttonHighlight');
   $(this).addClass('buttonHighlight');
   clearGrid();
   $('.grid').css({'background-color': '#eeeeee', 'opacity': '1'});
-  gridOpacity();
+  drawMode(mode);
 })
 
 $('button[name="randoms"]').on('click', function() {
+  mode = 'gridRandom';
   $(this).closest('ul').find('button').removeClass('buttonHighlight');
   $(this).addClass('buttonHighlight');
   clearGrid();
-  gridRandom();
+  drawMode(mode);
 });
